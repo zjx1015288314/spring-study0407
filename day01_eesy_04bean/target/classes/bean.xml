@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--把对象的创建交给spring管理-->
+    <!-- spring对bean的管理细节
+            1.创建Bean的三种方式
+            2.bean对象的作用范围
+            3.bean对象的生命周期
+    -->
+    <!--  创建Bean的三种方式  -->
+    <!--  一：采用默认构造函数创建，spring的配置文件使用bean标签，配以id和class属性且无其他标签和属性时，
+      就采用默认的构造函数创建bean对象，此时如果类中没有默认构造函数，则对象无法创建
+    <bean id="accountService" class="com.itzjx.service.impl.AccountServiceImpl"></bean>-->
+    <!--  二：使用普通工厂中的方法创建对象（使用某个类中的方法创建对象，并存入spring容器
+    <bean id="instanceFactory" class="com.itzjx.factory.InstanceFactory"></bean>
+    <bean id="accountService" factory-bean="instanceFactory" factory-method="getService"></bean>-->
+    <!--  三：使用工厂中的静态方法创建对象（使用某个类中的静态方法创建对象，并存入spring容器）
+    <bean id="accountService" class = "com.itzjx.factory.StaticFactory" factory-method="getService"></bean> -->
+
+    <!--  bean的作用范围调整
+        bean标签的scope属性：
+            作用：用于指定bean的作用范围
+            取值：
+                singleton   单例的（默认值） 常用
+                prototype   多例的          常用
+                request     作用于web应用的请求范围
+                session     作用于web应用的会话范围
+                global-session      作用于集群环境的会话范围(全局),当不是集群环境时，它就是session
+
+    <bean id="accountService" class="com.itzjx.service.impl.AccountServiceImpl" scope="prototype"></bean>
+    -->
+    <!--  bean对象的生命周期
+        单例对象：
+            出生：当容器创建时对象出生
+            活着：容器还在，对象一直活着
+            死亡：容器销毁，对象消亡
+            总结：生命周期与容器相同
+        多例对象：
+            出生
+            活着
+            死亡
+    -->
+    <bean id="accountService" class="com.itzjx.service.impl.AccountServiceImpl" scope="prototype"
+    init-method="init"  destroy-method="destory"></bean>
+
+</beans>
